@@ -13,6 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * Main activity of the app
+ *
+ * @Author : panxin
+ * @Date : 10:33 AM 3/20/16
+ * @Email : panxin109@gmail.com
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
