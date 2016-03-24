@@ -51,8 +51,8 @@ public class Users {
      * 1:正常, 0:未激活, -1:删除, -2:冻结
      */
     public static enum Status{
-        NORMAL(1, "男"),
-        INIT(0, "女"),
+        NORMAL(1, "正常"),
+        INIT(0, "未激活"),
         DELETE(-1, "删除"),
         FROZEN(-2, "冻结");
 
