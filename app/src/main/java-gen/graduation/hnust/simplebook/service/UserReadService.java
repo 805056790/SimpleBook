@@ -3,6 +3,8 @@ package graduation.hnust.simplebook.service;
 import graduation.hnust.simplebook.model.User;
 
 /**
+ * 用户信息读服务
+ *
  * @Author : panxin
  * @Date : 1:46 PM 3/20/16
  * @Email : panxin109@gmail.com
