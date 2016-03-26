@@ -27,6 +27,10 @@ public class Encrypt {
 
     private static final HashFunction MD5 = Hashing.md5();
 
+    private Encrypt() {
+
+    }
+
     /**
      * 对密码进行加密
      *
