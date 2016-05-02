@@ -3,6 +3,7 @@ package graduation.hnust.simplebook.activity.listener;
 import android.content.Context;
 import android.view.View;
 
+import graduation.hnust.simplebook.MainActivity;
 import graduation.hnust.simplebook.R;
 import graduation.hnust.simplebook.activity.LoginActivity;
 import graduation.hnust.simplebook.util.ActivityHelper;
@@ -18,6 +19,13 @@ import graduation.hnust.simplebook.util.ActivityHelper;
 public class MainActivityListener implements View.OnClickListener {
 
     private Context context;
+    private Object element;
+
+    public MainActivityListener() {}
+
+    public MainActivityListener(Object element) {
+        this.element = element;
+    }
 
     @Override
     public void onClick(View view) {

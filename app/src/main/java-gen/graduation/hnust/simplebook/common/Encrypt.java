@@ -1,4 +1,4 @@
-package graduation.hnust.simplebook.util;
+package graduation.hnust.simplebook.common;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;

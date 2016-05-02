@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <!-- title layout -->
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
         <!-- Back Button -->
         <ImageView
@@ -34,124 +34,240 @@
 
     </LinearLayout>
 
-    <!-- the form of app login -->
+    <!-- login layout -->
     <LinearLayout
+        android:id="@+id/layout_login"
+        android:visibility="visible"
         android:orientation="vertical"
-        android:layout_weight="8"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <!-- text for userName -->
-        <EditText
-            android:id="@+id/edit_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:inputType="text"
-            android:ems="10"
-            android:hint="手机号/邮箱" />
-
-        <!-- text for password -->
-        <EditText
-            android:id="@+id/edit_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:hint="密码" />
-
-        <!-- btn for login -->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#c9e2e4"
-            android:foreground="#c4c0c3"
-            android:textColor="#a3a9a0"
-            android:layout_marginTop="20dp"
-            android:text="登 录"
-            android:id="@+id/btn_login"
-            android:layout_gravity="bottom" />
-
+        <!-- the form of app login -->
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_weight="8"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <!-- text for userName -->
+            <EditText
+                android:id="@+id/edit_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:ems="10"
+                android:hint="手机号" />
+
+            <!-- text for password -->
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="密码" />
+
+            <!-- btn for login -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#c9e2e4"
+                android:foreground="#c4c0c3"
+                android:textColor="#a3a9a0"
+                android:layout_marginTop="20dp"
+                android:text="登 录"
+                android:id="@+id/btn_login"
+                android:layout_gravity="bottom" />
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_forget_password"
+                    android:layout_weight="1"
+                    android:textAlignment="viewStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="忘记密码?"/>
+
+                <TextView
+                    android:id="@+id/txt_quick_register"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="快速注册" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- the third login layout -->
+        <LinearLayout
+            android:layout_weight="5"
+            android:layout_margin="40dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#d1cdcd" />
 
             <TextView
-                android:id="@+id/txt_forget_password"
-                android:layout_weight="1"
-                android:textAlignment="viewStart"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="忘记密码?"/>
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="其他登录方式"/>
 
-            <TextView
-                android:id="@+id/txt_quick_register"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="快速注册" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/img_btn_login_wechat"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/login_weixin"/>
+
+                <ImageView
+                    android:id="@+id/img_btn_login_qq"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/login_qq"/>
+
+                <ImageView
+                    android:id="@+id/img_btn_login_weibo"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/login_weibo"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <!-- the third login layout -->
+
+    <!-- register layout -->
     <LinearLayout
-        android:layout_weight="5"
-        android:layout_margin="40dp"
+        android:id="@+id/layout_register"
+        android:visibility="visible"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="#d1cdcd" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:text="其他登录方式"/>
-
+        <!-- the form of app register -->
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/img_btn_login_wechat"
-                android:layout_weight="1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/login_weixin"/>
+            <!-- text for mobile -->
+            <EditText
+                android:id="@+id/edit_reg_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:ems="10"
+                android:hint="手机号" />
 
-            <ImageView
-                android:id="@+id/img_btn_login_qq"
-                android:layout_weight="1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/login_qq"/>
+            <!-- text for password -->
+            <EditText
+                android:id="@+id/edit_reg_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="密码" />
 
-            <ImageView
-                android:id="@+id/img_btn_login_weibo"
-                android:layout_weight="1"
-                android:layout_width="50dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- text for verify code -->
+                <EditText
+                    android:id="@+id/edit_reg_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:hint="验证码" />
+
+                <!-- btn for code -->
+                <Button
+                    android:layout_marginEnd="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="#c9e2e4"
+                    android:foreground="#c4c0c3"
+                    android:textColor="#a3a9a0"
+                    android:layout_marginBottom="5dp"
+                    android:text="发验证码"
+                    android:textSize="14sp"
+                    android:id="@+id/btn_send_sms"
+                    android:layout_gravity="bottom" />
+
+            </LinearLayout>
+
+            <!-- btn for register -->
+            <Button
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:src="@drawable/login_weibo"/>
+                android:background="#c9e2e4"
+                android:foreground="#c4c0c3"
+                android:textColor="#a3a9a0"
+                android:layout_marginTop="20dp"
+                android:text="注 册"
+                android:id="@+id/btn_register"
+                android:layout_gravity="bottom" />
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_back_login"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="返回登录" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
+
 
 </LinearLayout>

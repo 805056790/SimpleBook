@@ -17,9 +17,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import graduation.hnust.simplebook.activity.KeepAccountActivity;
 import graduation.hnust.simplebook.activity.listener.MainActivityListener;
 import graduation.hnust.simplebook.service.UserReadService;
 import graduation.hnust.simplebook.service.impl.UserReadServiceImpl;
+import graduation.hnust.simplebook.util.ActivityHelper;
 import graduation.hnust.simplebook.view.fragment.FragmentMain;
 import graduation.hnust.simplebook.view.fragment.FragmentSetting;
 
@@ -33,9 +35,10 @@ import graduation.hnust.simplebook.view.fragment.FragmentSetting;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    // what a shame flag = =
+    // 额 ...
     private int flag = 1;
 
+    // 头像, 昵称, 一些描述
     private ImageView imgHead;
     private TextView txtNickname;
     private TextView txtDescription;
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         // get the views of navigationView
         View headerView = navigationView.getHeaderView(0);
 
-        // headImage, nickname, desc wtf
+        // headImage, nickname, desc
         imgHead = (ImageView) headerView.findViewById(R.id.side_menu_image_head);
         txtNickname = (TextView) headerView.findViewById(R.id.side_menu_nickname);
         txtDescription = (TextView) headerView.findViewById(R.id.side_menu_user_desc);
@@ -138,6 +141,7 @@ public class MainActivity extends AppCompatActivity
                 setNavigationFragments(new FragmentMain());
                 break;
             case R.id.nav_income:
+                ActivityHelper.showActivity(MainActivity.this, KeepAccountActivity.class);
                 break;
             case R.id.nav_expense:
                 break;

@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--  -->
+    <color name="bgBeforeSelected">#FFFFFF</color>
+    <color name="bgAfterSelected">#689ee1</color>
+    <color name="fontBeforeSelected">#689ee1</color>
+    <color name="fontAfterSelected">#FFFFFF</color>
+
 </resources>

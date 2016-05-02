@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--  取消/保存按钮  -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#689ee1"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:text="取消"
+            android:textSize="22sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#FFffffff" />
+
+        <TextView
+            android:id="@+id/txt_save"
+            android:text="保存"
+            android:textSize="22sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!--  收入/支出选择器 -->
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:baselineAligned="false"
+        android:background="#e7e4e4">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|end|center_horizontal">
+
+            <TextView
+                android:id="@+id/txt_expense_select"
+                android:text="支出"
+                android:textSize="22sp"
+                android:background="#689ee1"
+                android:textColor="#ffffff"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_income_select"
+                android:text="收入"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:background="@drawable/text_border_before_selected"
+                android:textColor="#689ee1"
+                android:layout_width="100dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/image_view_item_selected"
+                android:src="@drawable/type_1_default"
+                android:layout_marginStart="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/txt_item_selected_name"
+                android:text="一般"
+                android:textSize="18sp"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:text="222.22"
+                    android:textSize="35sp"
+                    android:singleLine="true"
+                    android:maxLength="9"
+                    android:background="@null"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center|end" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_width="40dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="元"
+                    android:textSize="35sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="#0f0f0f"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:baselineAligned="false"
+        android:background="#e7e4e4">
+
+    </LinearLayout>
+
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/grid_view_item_icons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="70dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+
+
+</LinearLayout>

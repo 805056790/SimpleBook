@@ -9,7 +9,8 @@ public class ConsumeType {
     private Long id;
     private String name;
     private Integer status;
-    private String image;
+    private Integer imageId;
+    private String imageName;
     private java.util.Date createdAt;
     private java.util.Date updatedAt;
 
@@ -20,11 +21,12 @@ public class ConsumeType {
         this.id = id;
     }
 
-    public ConsumeType(Long id, String name, Integer status, String image, java.util.Date createdAt, java.util.Date updatedAt) {
+    public ConsumeType(Long id, String name, Integer status, Integer imageId, String imageName, java.util.Date createdAt, java.util.Date updatedAt) {
         this.id = id;
         this.name = name;
         this.status = status;
-        this.image = image;
+        this.imageId = imageId;
+        this.imageName = imageName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -53,12 +55,20 @@ public class ConsumeType {
         this.status = status;
     }
 
-    public String getImage() {
-        return image;
+    public Integer getImageId() {
+        return imageId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public java.util.Date getCreatedAt() {

@@ -34,9 +34,14 @@ public class ConsumeType {
     private Integer status;
 
     /**
-     * 图片
+     * 图片ID
      */
-    private String image;
+    private Integer imageId;
+
+    /**
+     * 图片名称
+     */
+    private String imageName;
 
     private Date createdAt;
 

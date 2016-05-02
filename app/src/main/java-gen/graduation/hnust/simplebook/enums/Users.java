@@ -119,4 +119,41 @@ public class Users {
         }
     }
 
+    /**
+     * 登录类型
+     */
+    public static enum LoginType {
+
+        MOBILE(1, "手机"),
+        EMAIL(2, "邮箱"),
+        OTHER(3, "其他");
+
+        private final int value;
+
+        private final String desc;
+
+        LoginType(int number, String desc) {
+            this.value = number;
+            this.desc = desc;
+        }
+
+        public int value(){
+            return this.value;
+        }
+
+        public static LoginType from(int value) {
+            for (LoginType type : LoginType.values()) {
+                if (Objects.equal(type.value, value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("unknown.login.type");
+        }
+
+        @Override
+        public String toString() {
+            return this.desc;
+        }
+    }
+
 }
