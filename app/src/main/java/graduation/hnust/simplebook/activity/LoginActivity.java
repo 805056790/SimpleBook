@@ -28,6 +28,11 @@ public class LoginActivity extends Activity {
     // instance of activity
     public static LoginActivity activityInstance;
 
+    public static Integer LOGIN_SUCCESS = 1;
+    public static Integer LOGIN_FAILED = -1;
+    public static Integer REGISTER_SUCCESS = 2;
+    public static Integer REGISTER_FAILED = -2;
+
     //  views of login
     @Getter
     private LinearLayout layoutLogin;

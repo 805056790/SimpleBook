@@ -1,6 +1,7 @@
 package graduation.hnust.simplebook.activity.listener;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import graduation.hnust.simplebook.MainActivity;
@@ -33,10 +34,19 @@ public class MainActivityListener implements View.OnClickListener {
         int id = view.getId();
         switch (id) {
             case R.id.side_menu_image_head:
-                ActivityHelper.showActivity(context, LoginActivity.class);
+                start2Login();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void start2Login() {
+        if (MainActivity.instance.getCurrentUser() == null) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            MainActivity.instance.startActivityForResult(intent, MainActivity.LOGIN_RESULT);
+        }else {
+            // TODO 用户信息界面
         }
     }
 }

@@ -15,4 +15,9 @@ public class UserApi {
      * 注册
      */
     public static final String REGISTER = "/api/user/register";
+
+    /**
+     * 监测用户是否已存在
+     */
+    public static final String USER_EXISTS = "/api/user/exists";
 }

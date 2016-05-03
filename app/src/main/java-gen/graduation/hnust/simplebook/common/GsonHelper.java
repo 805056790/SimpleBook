@@ -38,6 +38,29 @@ public class GsonHelper {
     }
 
     /**
+     * 时间格式的特殊原因, 所以需要这个Gson
+     *
+     * @return Gson
+     */
+    public static Gson getBeanGson() {
+        // create the json object which will manage the information received
+        GsonBuilder builder = new GsonBuilder();
+        // register an adapter to manager the date types as long values
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return new Date(json.getAsJsonPrimitive().getAsLong());
+            }
+        });
+        return builder.create();
+    }
+
+    public static <T> T getListGson(Class<T> t) {
+        // TODO
+        return null;
+    }
+
+    /**
      * bean to json
      *
      * @param t Bean Class

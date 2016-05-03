@@ -14,23 +14,19 @@
 
     <ImageView
         android:id="@+id/side_menu_image_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/image_cry_man" />
+        android:src="@drawable/pet_icon" />
 
     <TextView
         android:id="@+id/side_menu_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:textSize="16sp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="panxin"
+        android:text="SimpleBook"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/side_menu_user_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="panxin109@gmail.com" />
 
 </LinearLayout>

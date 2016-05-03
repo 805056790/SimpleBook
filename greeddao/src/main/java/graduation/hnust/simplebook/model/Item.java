@@ -49,6 +49,11 @@ public class Item {
     private String image;
 
     /**
+     * 图片ID
+     */
+    private Integer imageId;
+
+    /**
      * 记账日期
      */
     private Date date;

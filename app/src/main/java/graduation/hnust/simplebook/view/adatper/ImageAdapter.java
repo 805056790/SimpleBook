@@ -27,7 +27,6 @@ public class ImageAdapter extends BaseAdapter {
 
     private Context context;
     private List<ConsumeType> typeList;
-    private Integer resource;
 
     public ImageAdapter(Context context, List<ConsumeType> typeList) {
         this.context = context;

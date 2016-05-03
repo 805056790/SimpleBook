@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +19,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import graduation.hnust.simplebook.activity.KeepAccountActivity;
+import graduation.hnust.simplebook.activity.LoginActivity;
 import graduation.hnust.simplebook.activity.listener.MainActivityListener;
+import graduation.hnust.simplebook.model.User;
 import graduation.hnust.simplebook.service.UserReadService;
 import graduation.hnust.simplebook.service.impl.UserReadServiceImpl;
 import graduation.hnust.simplebook.util.ActivityHelper;
 import graduation.hnust.simplebook.view.fragment.FragmentMain;
 import graduation.hnust.simplebook.view.fragment.FragmentSetting;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Main activity of the app
@@ -35,13 +40,20 @@ import graduation.hnust.simplebook.view.fragment.FragmentSetting;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static MainActivity instance;
+    public static Integer LOGIN_RESULT = 10;
+    public static Integer REGISTER_RESULT = 11;
+
+    @Setter @Getter
+    private User currentUser;
+
     // 额 ...
     private int flag = 1;
 
     // 头像, 昵称, 一些描述
     private ImageView imgHead;
     private TextView txtNickname;
-    private TextView txtDescription;
+    // private TextView txtDescription;
 
     private UserReadService userReadService;
 
@@ -51,6 +63,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        instance = this;
 
         //init();
 
@@ -88,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         // headImage, nickname, desc
         imgHead = (ImageView) headerView.findViewById(R.id.side_menu_image_head);
         txtNickname = (TextView) headerView.findViewById(R.id.side_menu_nickname);
-        txtDescription = (TextView) headerView.findViewById(R.id.side_menu_user_desc);
+        //txtDescription = (TextView) headerView.findViewById(R.id.side_menu_user_desc);
 
         // bind event
         initEvents();
@@ -130,7 +144,7 @@ public class MainActivity extends AppCompatActivity
      * Handle navigation view item clicks here.
      *
      * @param item navigation item
-     * @return
+     * @return result
      */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -144,6 +158,7 @@ public class MainActivity extends AppCompatActivity
                 ActivityHelper.showActivity(MainActivity.this, KeepAccountActivity.class);
                 break;
             case R.id.nav_expense:
+                ActivityHelper.showActivity(MainActivity.this, TestActivity.class);
                 break;
             case R.id.nav_settings:
                 setNavigationFragments(new FragmentSetting());
@@ -158,6 +173,29 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LOGIN_RESULT) {
+            if (resultCode == LoginActivity.LOGIN_SUCCESS || resultCode == LoginActivity.REGISTER_SUCCESS) {
+                User user = (User) data.getSerializableExtra("user");
+                setUserInfo(user);
+            }
+        }
+    }
+
+    /**
+     * 设置用户信息
+     *
+     * @param user 用户信息
+     */
+    private void setUserInfo(User user) {
+        if (user != null) {
+            this.currentUser = user;
+            //txtDescription.setText(user.getMobile());
+            txtNickname.setText(user.getMobile());
+        }
     }
 
     /**
@@ -177,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * set fragment of the main view.
      *
-     * @param fragment
+     * @param fragment fragment
      */
     private void setNavigationFragments(Fragment fragment) {
         this.getFragmentManager()

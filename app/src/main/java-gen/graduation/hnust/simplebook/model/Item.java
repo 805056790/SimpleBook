@@ -12,6 +12,7 @@ public class Item {
     private Integer type;
     private Integer status;
     private String image;
+    private Integer imageId;
     private java.util.Date date;
     private String note;
     private Integer consumeType;
@@ -28,13 +29,14 @@ public class Item {
         this.id = id;
     }
 
-    public Item(Long id, Long userId, Long bookId, Integer type, Integer status, String image, java.util.Date date, String note, Integer consumeType, Integer amount, String longitude, String latitude, java.util.Date createdAt, java.util.Date updatedAt) {
+    public Item(Long id, Long userId, Long bookId, Integer type, Integer status, String image, Integer imageId, java.util.Date date, String note, Integer consumeType, Integer amount, String longitude, String latitude, java.util.Date createdAt, java.util.Date updatedAt) {
         this.id = id;
         this.userId = userId;
         this.bookId = bookId;
         this.type = type;
         this.status = status;
         this.image = image;
+        this.imageId = imageId;
         this.date = date;
         this.note = note;
         this.consumeType = consumeType;
@@ -91,6 +93,14 @@ public class Item {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 
     public java.util.Date getDate() {

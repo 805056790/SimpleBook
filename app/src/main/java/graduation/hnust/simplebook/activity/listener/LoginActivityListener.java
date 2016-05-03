@@ -1,21 +1,37 @@
 package graduation.hnust.simplebook.activity.listener;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.google.common.collect.Maps;
 import com.tencent.tauth.Tencent;
+
+import java.util.Map;
 
 import graduation.hnust.simplebook.R;
 import graduation.hnust.simplebook.activity.LoginActivity;
+import graduation.hnust.simplebook.base.GsonRequest;
+import graduation.hnust.simplebook.common.GsonHelper;
 import graduation.hnust.simplebook.common.NetworkHelper;
 import graduation.hnust.simplebook.common.SmsService;
 import graduation.hnust.simplebook.constants.AppConstants;
 import graduation.hnust.simplebook.listener.BaseUiListener;
+import graduation.hnust.simplebook.model.User;
 import graduation.hnust.simplebook.util.ToastUtil;
+import graduation.hnust.simplebook.web.api.UserApi;
+import graduation.hnust.simplebook.web.base.HttpUrl;
 import graduation.hnust.simplebook.web.services.UserWebService;
 import lombok.NoArgsConstructor;
 
@@ -31,9 +47,6 @@ import lombok.NoArgsConstructor;
 public class LoginActivityListener implements View.OnClickListener{
 
     private Context context;
-
-    private Tencent mTencent;
-    private BaseUiListener baseUiListener;
 
     private Object element;
 
@@ -99,9 +112,25 @@ public class LoginActivityListener implements View.OnClickListener{
         // 获取手机号, 密码
         String mobile = LoginActivity.activityInstance.getEditUserName().getText().toString();
         String password = LoginActivity.activityInstance.getEditPassword().getText().toString();
+        if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+            ToastUtil.show(context, "请填写手机号和密码!");
+            return;
+        }
+        // 登录
         UserWebService service = new UserWebService();
         try {
-            service.login(mobile, password);
+            User user = service.login(mobile, password);
+            if (user == null) {
+                ToastUtil.show(context, "登录失败, 用户名后密码错误!");
+                return;
+            }
+            // ToastUtil.show(context, "登录成功, 用户名: "+user.getMobile());
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", user);
+            intent.putExtras(bundle);
+            LoginActivity.activityInstance.setResult(LoginActivity.LOGIN_SUCCESS, intent);
+            LoginActivity.activityInstance.finish();
         } catch (Exception e) {
             ToastUtil.show(context, "出错啦!");
             e.printStackTrace();
@@ -129,8 +158,8 @@ public class LoginActivityListener implements View.OnClickListener{
      */
     private void loginQq() {
         // tencent
-        mTencent = Tencent.createInstance(AppConstants.QQ_APP_ID, context);
-        baseUiListener = new BaseUiListener(mTencent, context);
+        Tencent mTencent = Tencent.createInstance(AppConstants.QQ_APP_ID, context);
+        BaseUiListener baseUiListener = new BaseUiListener(mTencent, context);
         mTencent.login(LoginActivity.activityInstance, AppConstants.QQ_SCOPE, baseUiListener);
     }
 
@@ -146,12 +175,46 @@ public class LoginActivityListener implements View.OnClickListener{
      * 发送短信
      */
     private void sendSms() {
-        String mobile = String.valueOf(LoginActivity.activityInstance.getEditMobile().getText());
+        final String mobile = String.valueOf(LoginActivity.activityInstance.getEditMobile().getText());
         if (TextUtils.isEmpty(mobile)) {
             return;
         }
-        SmsService service = new SmsService();
-        service.sendSms(context, mobile);
+        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS;
+        RequestQueue queue = Volley.newRequestQueue(context);
+        GsonRequest<String> request = new GsonRequest<String>(
+                Request.Method.POST,
+                url,
+                String.class,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if ("true".equals(response)) {
+                            ToastUtil.show(context, "注册失败, 请检查您的网络状态!");
+                        }else {
+                            SmsService service = new SmsService();
+                            Boolean result = service.sendSms(context, mobile);
+                            if (!result) {
+                                ToastUtil.show(context, "短信发送失败, 请检查您的网络状态!");
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ToastUtil.show(context, "注册失败, 请检查您的网络状态!");
+                    }
+                },
+                GsonHelper.getBeanGson()){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = Maps.newHashMap();
+                params.put("loginBy", mobile);
+                params.put("loginType", "1");
+                return params;
+            }
+        };
+        queue.add(request);
     }
 
     /**
@@ -170,17 +233,89 @@ public class LoginActivityListener implements View.OnClickListener{
      * 手机注册
      */
     private void register() {
-        String mobile = String.valueOf(LoginActivity.activityInstance.getEditMobile().getText());
-        String password = String.valueOf(LoginActivity.activityInstance.getEditRegPassword().getText());
-        String verifyCode = String.valueOf(LoginActivity.activityInstance.getEditVerifyCode().getText());
+        final String mobile = String.valueOf(LoginActivity.activityInstance.getEditMobile().getText());
+        final String password = String.valueOf(LoginActivity.activityInstance.getEditRegPassword().getText());
+        final String verifyCode = String.valueOf(LoginActivity.activityInstance.getEditVerifyCode().getText());
+        if (TextUtils.isEmpty(mobile)) {
+            ToastUtil.show(context, "请填写手机号!");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            ToastUtil.show(context, "请填写密码!");
+            return;
+        }
         if (TextUtils.isEmpty(verifyCode)) {
             ToastUtil.show(context, "请填写验证码!");
             return;
         }
-        // 验证码校验
-        SmsService service = new SmsService();
-        service.sendSms(context, mobile);
-        // 注册
+        // ...
+        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS;
+        RequestQueue queue = Volley.newRequestQueue(context);
+        GsonRequest<String> request = new GsonRequest<String>(
+                Request.Method.POST,
+                url,
+                String.class,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if ("true".equals(response)) {
+                            ToastUtil.show(context, "注册失败, 请检查您的网络状态!");
+                        }else {
+                            doRegister(mobile, password, verifyCode);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ToastUtil.show(context, "注册失败, 请检查您的网络状态!");
+                    }
+                },
+                GsonHelper.getBeanGson()){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = Maps.newHashMap();
+                params.put("loginBy", mobile);
+                params.put("loginType", "1");
+                return params;
+            }
+        };
+        queue.add(request);
     }
 
+    /**
+     * 注册
+     *
+     * @param mobile 手机号
+     * @param password 密码
+     * @param verifyCode 验证码
+     */
+    private void doRegister(String mobile, String password, String verifyCode) {
+        // 验证码校验
+        SmsService service = new SmsService();
+        Boolean result = service.verifySmsCode(context, mobile, verifyCode);
+        if (!result) {
+            ToastUtil.show(context, "验证码不正确, 请重新输入!");
+            return;
+        }
+        // 注册
+        try {
+            UserWebService userWebService = new UserWebService();
+            User user = new User();
+            user.setMobile(mobile);
+            user.setPassword(password);
+            Long userId = userWebService.register(user);
+            user.setId(userId);
+            // 返回用户信息
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", user);
+            intent.putExtras(bundle);
+            LoginActivity.activityInstance.setResult(LoginActivity.REGISTER_SUCCESS, intent);
+            LoginActivity.activityInstance.finish();
+        }catch (Exception e) {
+            ToastUtil.show(context, "用户注册失败!");
+            e.printStackTrace();
+        }
+    }
 }

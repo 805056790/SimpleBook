@@ -89,6 +89,7 @@
 
     </LinearLayout>
 
+    <!--  记账信息  -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -102,14 +103,12 @@
 
             <ImageView
                 android:id="@+id/image_view_item_selected"
-                android:src="@drawable/type_1_default"
                 android:layout_marginStart="8dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
 
             <TextView
                 android:id="@+id/txt_item_selected_name"
-                android:text="一般"
                 android:textSize="18sp"
                 android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
@@ -168,7 +167,7 @@
 
     </LinearLayout>
 
-
+    <!--  消费类型列表  -->
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/grid_view_item_icons"
         android:layout_width="match_parent"
@@ -177,6 +176,7 @@
         android:numColumns="auto_fit"
         android:verticalSpacing="0dp"
         android:horizontalSpacing="0dp"
+        android:choiceMode="singleChoice"
         android:stretchMode="columnWidth"
         android:gravity="center"
         />
