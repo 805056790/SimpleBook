@@ -1,11 +1,13 @@
 package graduation.hnust.simplebook.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +18,11 @@ import java.util.List;
 
 import graduation.hnust.simplebook.R;
 import graduation.hnust.simplebook.activity.listener.KeepAccountListener;
+import graduation.hnust.simplebook.constants.KeyConstants;
+import graduation.hnust.simplebook.dto.UserDto;
 import graduation.hnust.simplebook.enums.ConsumeTypes;
 import graduation.hnust.simplebook.model.ConsumeType;
+import graduation.hnust.simplebook.model.User;
 import graduation.hnust.simplebook.view.adatper.ImageAdapter;
 import lombok.Getter;
 
@@ -30,6 +35,8 @@ import lombok.Getter;
 public class KeepAccountActivity extends Activity implements View.OnClickListener {
 
     public static KeepAccountActivity activityInstance;
+    @Getter
+    private UserDto user;
 
     @Getter
     private Integer type = ConsumeTypes.Type.EXPENSE.value();
@@ -43,6 +50,13 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
     private TextView txtItemSelectedName;
     @Getter
     private ImageView imgItemSelected;
+    @Getter
+    private EditText editAmount;
+    @Getter
+    private TextView txtDate;
+    private ImageView imgDate;
+    @Getter
+    private EditText editNote;
 
     // 消费类型列表
     @Getter
@@ -62,6 +76,7 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
         initViews();
         initEvents();
         initData();
+        getIntentExtras(getIntent());
 
         gridViewItemIcons.setAdapter(imageAdapter);
         gridViewItemIcons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +88,10 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
             }
         });
         gridViewItemIcons.setItemChecked(0, true);
+    }
+
+    private void getIntentExtras(Intent intent) {
+        user = (UserDto) intent.getSerializableExtra(KeyConstants.LOGIN_USER);
     }
 
     @Override
@@ -89,6 +108,7 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
      * 初始化控件信息
      */
     private void initViews() {
+        editAmount = (EditText) findViewById(R.id.edit_amount);
         // 文本框
         txtSave = (TextView) findViewById(R.id.txt_save);
         txtCancel = (TextView) findViewById(R.id.txt_cancel);
@@ -99,6 +119,10 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
         imgItemSelected = (ImageView) findViewById(R.id.image_view_item_selected);
         // 图片列表
         gridViewItemIcons = (GridView) findViewById(R.id.grid_view_item_icons);
+        // 日期
+        txtDate = (TextView) findViewById(R.id.txt_date);
+        imgDate = (ImageView) findViewById(R.id.img_date);
+        editNote = (EditText) findViewById(R.id.edit_note);
     }
 
     /**
@@ -107,8 +131,10 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
     private void initEvents() {
         txtIncomeSelect.setOnClickListener(this);
         txtExpenseSelect.setOnClickListener(this);
-        txtSave.setOnClickListener(new KeepAccountListener(this));
+        txtSave.setOnClickListener(new KeepAccountListener(this.getApplication()));
         txtCancel.setOnClickListener(new KeepAccountListener(this));
+        txtDate.setOnClickListener(new KeepAccountListener(this));
+        imgDate.setOnClickListener(new KeepAccountListener(this));
     }
 
     /**
@@ -129,17 +155,7 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
      */
     private List<ConsumeType> setExpenseTypes() {
         List<ConsumeType> types = Lists.newArrayList();
-        for (int i = 0; i < expenseTypes.length; i++) {
-            ConsumeType type = new ConsumeType();
-            type.setId((long)i);
-            if (i == 0) {
-                type.setName("一般" + i);
-            }else {
-                type.setName("消费" + i);
-            }
-            type.setImageId(expenseTypes[i]);
-            types.add(type);
-        }
+        types = initExpenseType(types);
         return types;
     }
 
@@ -150,17 +166,7 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
      */
     private List<ConsumeType> setIncomeTypes() {
         List<ConsumeType> types = Lists.newArrayList();
-        for (int i = 0; i < incomeTypes.length; i++) {
-            ConsumeType type = new ConsumeType();
-            type.setId((long)i);
-            if (i == 0) {
-                type.setName("一般" + i);
-            }else {
-                type.setName("消费" + i);
-            }
-            type.setImageId(incomeTypes[i]);
-            types.add(type);
-        }
+        types = initIncomeType(types);
         return types;
     }
 
@@ -225,5 +231,156 @@ public class KeepAccountActivity extends Activity implements View.OnClickListene
             R.drawable.type_income_1,
             R.drawable.type_income_2
     };
+
+
+    private List<ConsumeType> initExpenseType(List<ConsumeType> types) {
+        ConsumeType type = new ConsumeType();
+        // 支出
+        type.setId(0L);
+        type.setType(1);
+        type.setImageId(expenseTypes[0]);
+        type.setName("一般");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(2L);
+        type.setType(1);
+        type.setImageId(expenseTypes[1]);
+        type.setName("中餐");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(3L);
+        type.setType(1);
+        type.setImageId(expenseTypes[2]);
+        type.setName("公交");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(4L);
+        type.setType(1);
+        type.setImageId(expenseTypes[3]);
+        type.setName("零食");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(5L);
+        type.setType(1);
+        type.setImageId(expenseTypes[4]);
+        type.setName("衣服");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(6L);
+        type.setType(1);
+        type.setImageId(expenseTypes[5]);
+        type.setName("生活用品");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(7L);
+        type.setType(1);
+        type.setImageId(expenseTypes[6]);
+        type.setName("购物");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(8L);
+        type.setType(1);
+        type.setImageId(expenseTypes[7]);
+        type.setName("出租车");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(9L);
+        type.setType(1);
+        type.setImageId(expenseTypes[8]);
+        type.setName("快餐");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(10L);
+        type.setType(1);
+        type.setImageId(expenseTypes[9]);
+        type.setName("飞机");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(11L);
+        type.setType(1);
+        type.setImageId(expenseTypes[10]);
+        type.setName("化妆品");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(12L);
+        type.setType(1);
+        type.setImageId(expenseTypes[11]);
+        type.setName("电脑");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(13L);
+        type.setType(1);
+        type.setImageId(expenseTypes[12]);
+        type.setName("手机");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(14L);
+        type.setType(1);
+        type.setImageId(expenseTypes[13]);
+        type.setName("药物");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(15L);
+        type.setType(1);
+        type.setImageId(expenseTypes[14]);
+        type.setName("电影");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(16L);
+        type.setType(1);
+        type.setImageId(expenseTypes[15]);
+        type.setName("西餐");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(17L);
+        type.setType(1);
+        type.setImageId(expenseTypes[16]);
+        type.setName("游戏");
+        types.add(type);
+
+        return types;
+    }
+
+    private List<ConsumeType> initIncomeType(List<ConsumeType> types) {
+        ConsumeType type = new ConsumeType();
+        // 支出
+        type.setType(1);
+        type.setId(0L);
+        type.setImageId(incomeTypes[0]);
+        type.setName("一般");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(1L);
+        type.setType(1);
+        type.setImageId(incomeTypes[1]);
+        type.setName("工资");
+        types.add(type);
+
+        type = new ConsumeType();
+        type.setId(2L);
+        type.setType(1);
+        type.setImageId(incomeTypes[2]);
+        type.setName("红包");
+        types.add(type);
+
+        return types;
+    }
 
 }

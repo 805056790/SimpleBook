@@ -3,9 +3,12 @@ package graduation.hnust.simplebook.base;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import graduation.hnust.simplebook.R;
 import graduation.hnust.simplebook.constants.AppConstants;
+import graduation.hnust.simplebook.greendao.ConsumeTypeDao;
 import graduation.hnust.simplebook.greendao.DaoMaster;
 import graduation.hnust.simplebook.greendao.DaoSession;
+import graduation.hnust.simplebook.model.ConsumeType;
 
 /**
  * This way use can use the database/DAO objects across Activities.
@@ -52,4 +55,6 @@ public class BaseApplication extends Application {
     public SQLiteDatabase getDatabase() {
         return this.database;
     }
+
+
 }

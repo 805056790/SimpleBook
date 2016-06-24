@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Entity mapped to table "USER".
  */
-public class User implements Serializable {
+public class User  implements Serializable {
 
     private Long id;
     private String userName;

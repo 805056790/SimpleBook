@@ -2,6 +2,7 @@ package graduation.hnust.simplebook;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,8 +17,11 @@ import com.google.common.collect.Maps;
 
 import java.util.Map;
 
+import graduation.hnust.simplebook.base.BaseApplication;
 import graduation.hnust.simplebook.base.GsonRequest;
 import graduation.hnust.simplebook.common.GsonHelper;
+import graduation.hnust.simplebook.greendao.ItemDao;
+import graduation.hnust.simplebook.model.Item;
 import graduation.hnust.simplebook.model.User;
 import graduation.hnust.simplebook.web.api.UserApi;
 import graduation.hnust.simplebook.web.base.HttpUrl;
@@ -33,9 +37,9 @@ public class TestActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        button = (Button) findViewById(R.id.button);
-        btn = (Button) findViewById(R.id.button2);
-        textView = (TextView) findViewById(R.id.text_test);
+        //button = (Button) findViewById(R.id.button);
+        //btn = (Button) findViewById(R.id.button2);
+//        textView = (TextView) findViewById(R.id.text_test);
 
         button.setOnClickListener(this);
         btn.setOnClickListener(this);
@@ -89,14 +93,28 @@ public class TestActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.button) {
+//        if (v.getId() == R.id.button) {
+             testGreenDao();
+//        }else {
+//            try {
+//                doPost();
+//            }catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
 
-        }else {
-            try {
-                doPost();
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+    private void testGreenDao() {
+        try {
+            ItemDao itemDao = ((BaseApplication) this.getApplicationContext()).getDaoSession().getItemDao();
+            Item item = new Item();
+            item.setUserId(5L);
+            item.setNote("xxx");
+            item.setAmount(222222);
+            itemDao.insert(item);
+            Log.i("item", item.getId() + "");
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

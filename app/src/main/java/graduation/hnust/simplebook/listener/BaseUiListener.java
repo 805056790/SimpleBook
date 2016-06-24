@@ -14,6 +14,9 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
+import graduation.hnust.simplebook.model.QQInfoModel;
+import lombok.Getter;
+
 /**
  * 腾讯QQ监听类
  *
@@ -23,6 +26,8 @@ import java.util.Iterator;
  */
 public class BaseUiListener implements IUiListener {
 
+    @Getter
+    private QQInfoModel model;
     private Tencent tencent;
     private Context context;
 
@@ -38,7 +43,7 @@ public class BaseUiListener implements IUiListener {
 
     @Override
     public void onError(UiError uiError) {
-
+        Log.i("qq.error", uiError.toString());
     }
 
     @Override
@@ -76,6 +81,21 @@ public class BaseUiListener implements IUiListener {
         info.getUserInfo(new IUiListener() {
             @Override
             public void onComplete(Object o) {
+                /*
+                  JSONObject obj = (JSONObject) msg.obj;
+                try{
+                    String imgUrl = obj.getString("figureurl_qq_1");
+                    String nickName = obj.getString("nickname");
+
+                    Log.i("qq_info", "imageUrl="+imgUrl);
+                    Log.i("qq_info", "nickName="+nickName);
+
+                    txt.setText(nickName);
+                    Picasso.with(MainActivity.this).load(imgUrl).resize(100,100).centerCrop().into(qqHeadImage);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                   */
                 Log.i("qq_info", "最后一次尝试 data="+o.toString());
                 JSONObject object = null;
                 try {
@@ -85,6 +105,11 @@ public class BaseUiListener implements IUiListener {
                         String key = it.next();
                         Log.i("qq_info", "JSON  key="+key+", value="+object.get(key));
                     }
+                    String imgUrl = object.getString("figureurl_qq_1");
+                    String nickName = object.getString("nickname");
+                    model = new QQInfoModel();
+                    model.setFigureUrlQq1(imgUrl);
+                    model.setNickname(nickName);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

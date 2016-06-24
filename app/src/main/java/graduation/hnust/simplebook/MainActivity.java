@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -18,13 +19,36 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import graduation.hnust.simplebook.activity.KeepAccountActivity;
 import graduation.hnust.simplebook.activity.LoginActivity;
+import graduation.hnust.simplebook.activity.SettingActivity;
 import graduation.hnust.simplebook.activity.listener.MainActivityListener;
+import graduation.hnust.simplebook.base.BaseApplication;
+import graduation.hnust.simplebook.constants.KeyConstants;
+import graduation.hnust.simplebook.dto.UserDto;
+import graduation.hnust.simplebook.greendao.ConsumeTypeDao;
+import graduation.hnust.simplebook.greendao.ItemDao;
+import graduation.hnust.simplebook.model.ConsumeType;
+import graduation.hnust.simplebook.model.Item;
+import graduation.hnust.simplebook.model.QQInfoModel;
 import graduation.hnust.simplebook.model.User;
+import graduation.hnust.simplebook.service.ItemReadService;
 import graduation.hnust.simplebook.service.UserReadService;
+import graduation.hnust.simplebook.service.impl.ItemReadServiceImpl;
 import graduation.hnust.simplebook.service.impl.UserReadServiceImpl;
 import graduation.hnust.simplebook.util.ActivityHelper;
+import graduation.hnust.simplebook.view.fragment.FragmentExpense;
+import graduation.hnust.simplebook.view.fragment.FragmentIncome;
 import graduation.hnust.simplebook.view.fragment.FragmentMain;
 import graduation.hnust.simplebook.view.fragment.FragmentSetting;
 import lombok.Getter;
@@ -43,17 +67,14 @@ public class MainActivity extends AppCompatActivity
     public static MainActivity instance;
     public static Integer LOGIN_RESULT = 10;
     public static Integer REGISTER_RESULT = 11;
+    public static Integer ADD_ACCOUNT_ITEM = 30;
 
     @Setter @Getter
-    private User currentUser;
+    private UserDto currentUser;
 
-    // 额 ...
-    private int flag = 1;
-
-    // 头像, 昵称, 一些描述
+    // 头像, 昵称
     private ImageView imgHead;
     private TextView txtNickname;
-    // private TextView txtDescription;
 
     private UserReadService userReadService;
 
@@ -66,21 +87,18 @@ public class MainActivity extends AppCompatActivity
 
         instance = this;
 
-        //init();
-
         // floating action button
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (flag == 1) {
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_24dp));
-                    flag = 0;
-                }else {
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_24dp));
-                    flag = 1;
-                }
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                // 添加账本
+                Intent intent = new Intent(MainActivity.this, KeepAccountActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(KeyConstants.LOGIN_USER, currentUser);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, ADD_ACCOUNT_ITEM);
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -102,10 +120,39 @@ public class MainActivity extends AppCompatActivity
         // headImage, nickname, desc
         imgHead = (ImageView) headerView.findViewById(R.id.side_menu_image_head);
         txtNickname = (TextView) headerView.findViewById(R.id.side_menu_nickname);
-        //txtDescription = (TextView) headerView.findViewById(R.id.side_menu_user_desc);
+
+        if (currentUser == null) {
+            //getUser();
+        }
 
         // bind event
         initEvents();
+        // test();
+    }
+
+    private void getUser() {
+        File file = null;
+        ObjectInputStream input = null;
+        try {
+            file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "user.tmp");
+            input = new ObjectInputStream(new FileInputStream(file));
+            currentUser = (UserDto) input.readObject();
+            if (currentUser.getUser() == null) {
+                Log.i("user", "用户数据为空!");
+            }else {
+                Log.i("user", currentUser.toString());
+                txtNickname.setText(currentUser.getUser().getMobile() + "");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (input != null)  input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -155,19 +202,19 @@ public class MainActivity extends AppCompatActivity
                 setNavigationFragments(new FragmentMain());
                 break;
             case R.id.nav_income:
-                ActivityHelper.showActivity(MainActivity.this, KeepAccountActivity.class);
+                setNavigationFragments(new FragmentIncome());
                 break;
             case R.id.nav_expense:
-                ActivityHelper.showActivity(MainActivity.this, TestActivity.class);
+                setNavigationFragments(new FragmentExpense());
                 break;
             case R.id.nav_settings:
-                setNavigationFragments(new FragmentSetting());
+                goSettingActivity();
                 break;
             case R.id.nav_share:
-                //share();
+                share();
                 break;
             case R.id.nav_send:
-                //send();
+                send();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,12 +222,32 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * what a fucking name
+     */
+    private void goSettingActivity() {
+        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", currentUser);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("result", requestCode + ", " + resultCode);
         if (requestCode == LOGIN_RESULT) {
+            // 平台账号登录成功或者注册登录成功
             if (resultCode == LoginActivity.LOGIN_SUCCESS || resultCode == LoginActivity.REGISTER_SUCCESS) {
-                User user = (User) data.getSerializableExtra("user");
+                UserDto user = (UserDto) data.getSerializableExtra(KeyConstants.LOGIN_USER);
                 setUserInfo(user);
+            }
+            // QQ登录成功
+            if (resultCode == LoginActivity.QQ_LOGIN_SUCCESS) {
+                UserDto userDto = (UserDto) data.getSerializableExtra(KeyConstants.LOGIN_USER_BY_QQ);
+                Log.i("user_dto", userDto.toString());
+                Picasso.with(MainActivity.this).load(userDto.getQqInfoModel().getFigureUrlQq1()).resize(100, 100).centerCrop().into(imgHead);
+                txtNickname.setText(userDto.getQqInfoModel().getNickname());
             }
         }
     }
@@ -190,11 +257,26 @@ public class MainActivity extends AppCompatActivity
      *
      * @param user 用户信息
      */
-    private void setUserInfo(User user) {
+    private void setUserInfo(UserDto user) {
         if (user != null) {
             this.currentUser = user;
-            //txtDescription.setText(user.getMobile());
-            txtNickname.setText(user.getMobile());
+            txtNickname.setText(user.getUser().getMobile());
+            File file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "user.tmp");
+            ObjectOutputStream out = null;
+            try{
+                out = new ObjectOutputStream(new FileOutputStream(file));
+                out.writeObject(user);
+                out.flush();
+            }catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

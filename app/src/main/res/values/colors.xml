@@ -4,10 +4,26 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <!--  -->
+    <!-- 按钮 -->
     <color name="bgBeforeSelected">#FFFFFF</color>
     <color name="bgAfterSelected">#689ee1</color>
     <color name="fontBeforeSelected">#689ee1</color>
     <color name="fontAfterSelected">#FFFFFF</color>
+
+    <!-- xxx -->
+    <color name="bgColor">#4381ce</color>
+    <color name="fontColor">#FFFFFF</color>
+
+    <color name="dialogPress">#dee2e6</color>
+    <color name="dialogNoPress">#FFFFFF</color>
+
+    <color name="loginViewPress">#dee2e6</color>
+    <color name="loginViewNoPress">#c9e2e4</color>
+
+    <color name="txtPress">#4b8bb6</color>
+    <color name="txtNoPress">#1e09b9</color>
+
+    <color name="budgetNotice">#df5281</color>
+    <color name="budgetNormal">#e48e4d</color>
 
 </resources>

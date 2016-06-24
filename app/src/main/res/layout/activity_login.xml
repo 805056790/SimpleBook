@@ -146,6 +146,7 @@
                     android:src="@drawable/login_weixin"/>
 
                 <ImageView
+                    android:onClick="loginByQQ"
                     android:id="@+id/img_btn_login_qq"
                     android:layout_weight="1"
                     android:layout_width="50dp"

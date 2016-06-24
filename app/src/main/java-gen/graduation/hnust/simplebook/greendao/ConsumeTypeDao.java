@@ -26,10 +26,11 @@ public class ConsumeTypeDao extends AbstractDao<ConsumeType, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Status = new Property(2, Integer.class, "status", false, "STATUS");
-        public final static Property ImageId = new Property(3, Integer.class, "imageId", false, "IMAGE_ID");
-        public final static Property ImageName = new Property(4, String.class, "imageName", false, "IMAGE_NAME");
-        public final static Property CreatedAt = new Property(5, java.util.Date.class, "createdAt", false, "CREATED_AT");
-        public final static Property UpdatedAt = new Property(6, java.util.Date.class, "updatedAt", false, "UPDATED_AT");
+        public final static Property Type = new Property(3, Integer.class, "type", false, "TYPE");
+        public final static Property ImageId = new Property(4, Integer.class, "imageId", false, "IMAGE_ID");
+        public final static Property ImageName = new Property(5, String.class, "imageName", false, "IMAGE_NAME");
+        public final static Property CreatedAt = new Property(6, java.util.Date.class, "createdAt", false, "CREATED_AT");
+        public final static Property UpdatedAt = new Property(7, java.util.Date.class, "updatedAt", false, "UPDATED_AT");
     };
 
 
@@ -48,10 +49,11 @@ public class ConsumeTypeDao extends AbstractDao<ConsumeType, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
                 "\"STATUS\" INTEGER," + // 2: status
-                "\"IMAGE_ID\" INTEGER," + // 3: imageId
-                "\"IMAGE_NAME\" TEXT," + // 4: imageName
-                "\"CREATED_AT\" INTEGER," + // 5: createdAt
-                "\"UPDATED_AT\" INTEGER);"); // 6: updatedAt
+                "\"TYPE\" INTEGER," + // 3: type
+                "\"IMAGE_ID\" INTEGER," + // 4: imageId
+                "\"IMAGE_NAME\" TEXT," + // 5: imageName
+                "\"CREATED_AT\" INTEGER," + // 6: createdAt
+                "\"UPDATED_AT\" INTEGER);"); // 7: updatedAt
     }
 
     /** Drops the underlying database table. */
@@ -80,24 +82,29 @@ public class ConsumeTypeDao extends AbstractDao<ConsumeType, Long> {
             stmt.bindLong(3, status);
         }
  
+        Integer type = entity.getType();
+        if (type != null) {
+            stmt.bindLong(4, type);
+        }
+ 
         Integer imageId = entity.getImageId();
         if (imageId != null) {
-            stmt.bindLong(4, imageId);
+            stmt.bindLong(5, imageId);
         }
  
         String imageName = entity.getImageName();
         if (imageName != null) {
-            stmt.bindString(5, imageName);
+            stmt.bindString(6, imageName);
         }
  
         java.util.Date createdAt = entity.getCreatedAt();
         if (createdAt != null) {
-            stmt.bindLong(6, createdAt.getTime());
+            stmt.bindLong(7, createdAt.getTime());
         }
  
         java.util.Date updatedAt = entity.getUpdatedAt();
         if (updatedAt != null) {
-            stmt.bindLong(7, updatedAt.getTime());
+            stmt.bindLong(8, updatedAt.getTime());
         }
     }
 
@@ -114,10 +121,11 @@ public class ConsumeTypeDao extends AbstractDao<ConsumeType, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // status
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // imageId
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // imageName
-            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // createdAt
-            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)) // updatedAt
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // type
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // imageId
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // imageName
+            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)), // createdAt
+            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)) // updatedAt
         );
         return entity;
     }
@@ -128,10 +136,11 @@ public class ConsumeTypeDao extends AbstractDao<ConsumeType, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setStatus(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
-        entity.setImageId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setImageName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setCreatedAt(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
-        entity.setUpdatedAt(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
+        entity.setType(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setImageId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setImageName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCreatedAt(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
+        entity.setUpdatedAt(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
      }
     
     /** @inheritdoc */

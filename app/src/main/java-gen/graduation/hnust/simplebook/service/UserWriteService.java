@@ -1,5 +1,6 @@
 package graduation.hnust.simplebook.service;
 
+import graduation.hnust.simplebook.dto.UserDto;
 import graduation.hnust.simplebook.model.User;
 
 /**
@@ -18,6 +19,14 @@ public interface UserWriteService {
      * @return 用户ID
      */
     Long create(User user);
+
+    /**
+     * 创建用户
+     *
+     * @param userDto 用户信息
+     * @return 用户ID
+     */
+    Long create(UserDto userDto);
 
     /**
      * 更新用户信息

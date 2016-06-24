@@ -27,6 +27,8 @@ import graduation.hnust.simplebook.common.GsonHelper;
 import graduation.hnust.simplebook.common.NetworkHelper;
 import graduation.hnust.simplebook.common.SmsService;
 import graduation.hnust.simplebook.constants.AppConstants;
+import graduation.hnust.simplebook.constants.KeyConstants;
+import graduation.hnust.simplebook.dto.UserDto;
 import graduation.hnust.simplebook.listener.BaseUiListener;
 import graduation.hnust.simplebook.model.User;
 import graduation.hnust.simplebook.util.ToastUtil;
@@ -120,6 +122,7 @@ public class LoginActivityListener implements View.OnClickListener{
         UserWebService service = new UserWebService();
         try {
             User user = service.login(mobile, password);
+            UserDto userDto = new UserDto();
             if (user == null) {
                 ToastUtil.show(context, "登录失败, 用户名后密码错误!");
                 return;
@@ -127,7 +130,8 @@ public class LoginActivityListener implements View.OnClickListener{
             // ToastUtil.show(context, "登录成功, 用户名: "+user.getMobile());
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("user", user);
+            userDto.setUser(user);
+            bundle.putSerializable(KeyConstants.LOGIN_USER, userDto);
             intent.putExtras(bundle);
             LoginActivity.activityInstance.setResult(LoginActivity.LOGIN_SUCCESS, intent);
             LoginActivity.activityInstance.finish();
@@ -158,6 +162,7 @@ public class LoginActivityListener implements View.OnClickListener{
      */
     private void loginQq() {
         // tencent
+        ToastUtil.show(context, "调用QQ登录.");
         Tencent mTencent = Tencent.createInstance(AppConstants.QQ_APP_ID, context);
         BaseUiListener baseUiListener = new BaseUiListener(mTencent, context);
         mTencent.login(LoginActivity.activityInstance, AppConstants.QQ_SCOPE, baseUiListener);
@@ -177,12 +182,13 @@ public class LoginActivityListener implements View.OnClickListener{
     private void sendSms() {
         final String mobile = String.valueOf(LoginActivity.activityInstance.getEditMobile().getText());
         if (TextUtils.isEmpty(mobile)) {
+            ToastUtil.show(context, "请填写手机号!");
             return;
         }
-        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS;
+        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS + "?loginType=1&loginBy="+mobile;
         RequestQueue queue = Volley.newRequestQueue(context);
         GsonRequest<String> request = new GsonRequest<String>(
-                Request.Method.POST,
+                Request.Method.GET,
                 url,
                 String.class,
                 new Response.Listener<String>() {
@@ -206,13 +212,6 @@ public class LoginActivityListener implements View.OnClickListener{
                     }
                 },
                 GsonHelper.getBeanGson()){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = Maps.newHashMap();
-                params.put("loginBy", mobile);
-                params.put("loginType", "1");
-                return params;
-            }
         };
         queue.add(request);
     }
@@ -249,10 +248,10 @@ public class LoginActivityListener implements View.OnClickListener{
             return;
         }
         // ...
-        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS;
+        String url = HttpUrl.DOMAIN+ UserApi.USER_EXISTS + "?loginType=1&loginBy="+mobile;
         RequestQueue queue = Volley.newRequestQueue(context);
         GsonRequest<String> request = new GsonRequest<String>(
-                Request.Method.POST,
+                Request.Method.GET,
                 url,
                 String.class,
                 new Response.Listener<String>() {
@@ -272,13 +271,6 @@ public class LoginActivityListener implements View.OnClickListener{
                     }
                 },
                 GsonHelper.getBeanGson()){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = Maps.newHashMap();
-                params.put("loginBy", mobile);
-                params.put("loginType", "1");
-                return params;
-            }
         };
         queue.add(request);
     }
@@ -300,6 +292,7 @@ public class LoginActivityListener implements View.OnClickListener{
         }
         // 注册
         try {
+            UserDto userDto = new UserDto();
             UserWebService userWebService = new UserWebService();
             User user = new User();
             user.setMobile(mobile);
@@ -309,7 +302,8 @@ public class LoginActivityListener implements View.OnClickListener{
             // 返回用户信息
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("user", user);
+            userDto.setUser(user);
+            bundle.putSerializable(KeyConstants.LOGIN_USER, userDto);
             intent.putExtras(bundle);
             LoginActivity.activityInstance.setResult(LoginActivity.REGISTER_SUCCESS, intent);
             LoginActivity.activityInstance.finish();

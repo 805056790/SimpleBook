@@ -34,6 +34,11 @@ public class ConsumeType {
     private Integer status;
 
     /**
+     * 收入/支出
+     */
+    private Integer type;
+
+    /**
      * 图片ID
      */
     private Integer imageId;

@@ -9,14 +9,17 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -29,9 +32,25 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.KeepAccountActivity"/>
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".activity.KeepAccountActivity">
+        </activity>
+        <activity android:name=".activity.UserInfoActivity"/>
+        <activity
+            android:name=".activity.DialogActivity"
+            android:theme="@style/dialogActivityStyle">
+        </activity>
+        <activity
+            android:name=".view.dialog.BudgetDialog"
+            android:theme="@style/dialogActivityStyle">
+        </activity>
+        <activity android:name=".activity.IncomeStatisticsActivity"/>
+        <activity android:name=".activity.ItemInfoActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
 
         <activity android:name=".TestActivity"/>
+        <activity android:name=".TestActivity2"/>
 
         <!-- Tencent QQ config -->
         <activity
@@ -42,7 +61,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent1105044185" />
+                <data android:scheme="tencent1105190039" />
             </intent-filter>
         </activity>
 

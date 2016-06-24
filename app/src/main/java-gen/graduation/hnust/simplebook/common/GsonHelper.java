@@ -22,7 +22,7 @@ import java.util.List;
 public class GsonHelper {
 
     private static Gson gson;
-    private static Gson gsonList;
+    // private static Gson gsonList;
 
     static {
         // create the json object which will manage the information received
@@ -92,6 +92,7 @@ public class GsonHelper {
      * @return  result of the list
      */
     public <T> T json2List(String json, List<T> t) {
+        Gson gsonList = new Gson();
         Type listType = new TypeToken<List<T>>(){
             // ...
         }.getType();
