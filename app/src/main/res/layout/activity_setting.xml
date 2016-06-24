@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <!-- Back Button -->
+        <ImageView
+            android:onClick="back2Main2"
+            android:id="@+id/img_btn_back_of_user"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_arrow_back_24dp"/>
+
+        <!-- Title -->
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:layout_marginEnd="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="设置"
+            android:textSize="25sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_export"
+            android:text="导出账本"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="export"
+            android:id="@+id/img_export"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_sync"
+            android:text="同步账本"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="sync"
+            android:id="@+id/img_sync"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_share"
+            android:text="分享账本"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="share"
+            android:id="@+id/img_share"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_feed_back"
+            android:text="建议反馈"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="feedback"
+            android:id="@+id/img_feed_back"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_about_us"
+            android:text="关于我们"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="aboutUs"
+            android:id="@+id/img_about_us"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/txt_update"
+            android:text="软件更新"
+            android:layout_weight="9"
+            android:textAlignment="textStart"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:onClick="update"
+            android:id="@+id/img_update"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:background="#cdcdd6" />
+
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:onClick="logout"
+            android:text="退出登录"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

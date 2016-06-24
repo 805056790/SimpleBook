@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/SimpleBook.iml" filepath="$PROJECT_DIR$/SimpleBook.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/greeddao/greeddao.iml" filepath="$PROJECT_DIR$/greeddao/greeddao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monthAndYearPicker/monthAndYearPicker.iml" filepath="$PROJECT_DIR$/monthAndYearPicker/monthAndYearPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pieChart_library/pieChart_library.iml" filepath="$PROJECT_DIR$/pieChart_library/pieChart_library.iml" />
     </modules>
   </component>
 </project>

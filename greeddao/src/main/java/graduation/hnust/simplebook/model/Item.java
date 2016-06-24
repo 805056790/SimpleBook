@@ -34,7 +34,7 @@ public class Item {
     private Long bookId;
 
     /**
-     * 收支类型 1:收入  -1:支出
+     * 收支类型 1:收入  2:支出
      */
     private Integer type;
 
@@ -47,6 +47,11 @@ public class Item {
      * 图片
      */
     private String image;
+
+    /**
+     * 图片ID
+     */
+    private Integer imageId;
 
     /**
      * 记账日期
@@ -62,6 +67,11 @@ public class Item {
      * 消费类型
      */
     private Integer consumeType;
+
+    /**
+     * 消费类型名称
+     */
+    private String consumeTypeName;
 
     /**
      * 消费金额

@@ -1,8 +1,11 @@
 package graduation.hnust.simplebook.service;
 
+import graduation.hnust.simplebook.dto.UserDto;
 import graduation.hnust.simplebook.model.User;
 
 /**
+ * 用户信息写服务
+ *
  * @Author : panxin
  * @Date : 1:46 PM 3/20/16
  * @Email : panxin109@gmail.com
@@ -16,6 +19,14 @@ public interface UserWriteService {
      * @return 用户ID
      */
     Long create(User user);
+
+    /**
+     * 创建用户
+     *
+     * @param userDto 用户信息
+     * @return 用户ID
+     */
+    Long create(UserDto userDto);
 
     /**
      * 更新用户信息

@@ -29,14 +29,16 @@ public class ItemDao extends AbstractDao<Item, Long> {
         public final static Property Type = new Property(3, Integer.class, "type", false, "TYPE");
         public final static Property Status = new Property(4, Integer.class, "status", false, "STATUS");
         public final static Property Image = new Property(5, String.class, "image", false, "IMAGE");
-        public final static Property Date = new Property(6, java.util.Date.class, "date", false, "DATE");
-        public final static Property Note = new Property(7, String.class, "note", false, "NOTE");
-        public final static Property ConsumeType = new Property(8, Integer.class, "consumeType", false, "CONSUME_TYPE");
-        public final static Property Amount = new Property(9, Integer.class, "amount", false, "AMOUNT");
-        public final static Property Longitude = new Property(10, String.class, "longitude", false, "LONGITUDE");
-        public final static Property Latitude = new Property(11, String.class, "latitude", false, "LATITUDE");
-        public final static Property CreatedAt = new Property(12, java.util.Date.class, "createdAt", false, "CREATED_AT");
-        public final static Property UpdatedAt = new Property(13, java.util.Date.class, "updatedAt", false, "UPDATED_AT");
+        public final static Property ImageId = new Property(6, Integer.class, "imageId", false, "IMAGE_ID");
+        public final static Property Date = new Property(7, java.util.Date.class, "date", false, "DATE");
+        public final static Property Note = new Property(8, String.class, "note", false, "NOTE");
+        public final static Property ConsumeType = new Property(9, Integer.class, "consumeType", false, "CONSUME_TYPE");
+        public final static Property ConsumeTypeName = new Property(10, String.class, "consumeTypeName", false, "CONSUME_TYPE_NAME");
+        public final static Property Amount = new Property(11, Integer.class, "amount", false, "AMOUNT");
+        public final static Property Longitude = new Property(12, String.class, "longitude", false, "LONGITUDE");
+        public final static Property Latitude = new Property(13, String.class, "latitude", false, "LATITUDE");
+        public final static Property CreatedAt = new Property(14, java.util.Date.class, "createdAt", false, "CREATED_AT");
+        public final static Property UpdatedAt = new Property(15, java.util.Date.class, "updatedAt", false, "UPDATED_AT");
     };
 
 
@@ -58,14 +60,16 @@ public class ItemDao extends AbstractDao<Item, Long> {
                 "\"TYPE\" INTEGER," + // 3: type
                 "\"STATUS\" INTEGER," + // 4: status
                 "\"IMAGE\" TEXT," + // 5: image
-                "\"DATE\" INTEGER," + // 6: date
-                "\"NOTE\" TEXT," + // 7: note
-                "\"CONSUME_TYPE\" INTEGER," + // 8: consumeType
-                "\"AMOUNT\" INTEGER," + // 9: amount
-                "\"LONGITUDE\" TEXT," + // 10: longitude
-                "\"LATITUDE\" TEXT," + // 11: latitude
-                "\"CREATED_AT\" INTEGER," + // 12: createdAt
-                "\"UPDATED_AT\" INTEGER);"); // 13: updatedAt
+                "\"IMAGE_ID\" INTEGER," + // 6: imageId
+                "\"DATE\" INTEGER," + // 7: date
+                "\"NOTE\" TEXT," + // 8: note
+                "\"CONSUME_TYPE\" INTEGER," + // 9: consumeType
+                "\"CONSUME_TYPE_NAME\" TEXT," + // 10: consumeTypeName
+                "\"AMOUNT\" INTEGER," + // 11: amount
+                "\"LONGITUDE\" TEXT," + // 12: longitude
+                "\"LATITUDE\" TEXT," + // 13: latitude
+                "\"CREATED_AT\" INTEGER," + // 14: createdAt
+                "\"UPDATED_AT\" INTEGER);"); // 15: updatedAt
     }
 
     /** Drops the underlying database table. */
@@ -109,44 +113,54 @@ public class ItemDao extends AbstractDao<Item, Long> {
             stmt.bindString(6, image);
         }
  
+        Integer imageId = entity.getImageId();
+        if (imageId != null) {
+            stmt.bindLong(7, imageId);
+        }
+ 
         java.util.Date date = entity.getDate();
         if (date != null) {
-            stmt.bindLong(7, date.getTime());
+            stmt.bindLong(8, date.getTime());
         }
  
         String note = entity.getNote();
         if (note != null) {
-            stmt.bindString(8, note);
+            stmt.bindString(9, note);
         }
  
         Integer consumeType = entity.getConsumeType();
         if (consumeType != null) {
-            stmt.bindLong(9, consumeType);
+            stmt.bindLong(10, consumeType);
+        }
+ 
+        String consumeTypeName = entity.getConsumeTypeName();
+        if (consumeTypeName != null) {
+            stmt.bindString(11, consumeTypeName);
         }
  
         Integer amount = entity.getAmount();
         if (amount != null) {
-            stmt.bindLong(10, amount);
+            stmt.bindLong(12, amount);
         }
  
         String longitude = entity.getLongitude();
         if (longitude != null) {
-            stmt.bindString(11, longitude);
+            stmt.bindString(13, longitude);
         }
  
         String latitude = entity.getLatitude();
         if (latitude != null) {
-            stmt.bindString(12, latitude);
+            stmt.bindString(14, latitude);
         }
  
         java.util.Date createdAt = entity.getCreatedAt();
         if (createdAt != null) {
-            stmt.bindLong(13, createdAt.getTime());
+            stmt.bindLong(15, createdAt.getTime());
         }
  
         java.util.Date updatedAt = entity.getUpdatedAt();
         if (updatedAt != null) {
-            stmt.bindLong(14, updatedAt.getTime());
+            stmt.bindLong(16, updatedAt.getTime());
         }
     }
 
@@ -166,14 +180,16 @@ public class ItemDao extends AbstractDao<Item, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // type
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // status
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // image
-            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)), // date
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // note
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // consumeType
-            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // amount
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // longitude
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // latitude
-            cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)), // createdAt
-            cursor.isNull(offset + 13) ? null : new java.util.Date(cursor.getLong(offset + 13)) // updatedAt
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // imageId
+            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)), // date
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // note
+            cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // consumeType
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // consumeTypeName
+            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11), // amount
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // longitude
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // latitude
+            cursor.isNull(offset + 14) ? null : new java.util.Date(cursor.getLong(offset + 14)), // createdAt
+            cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)) // updatedAt
         );
         return entity;
     }
@@ -187,14 +203,16 @@ public class ItemDao extends AbstractDao<Item, Long> {
         entity.setType(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setStatus(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setImage(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setDate(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
-        entity.setNote(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setConsumeType(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setAmount(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
-        entity.setLongitude(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setLatitude(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setCreatedAt(cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)));
-        entity.setUpdatedAt(cursor.isNull(offset + 13) ? null : new java.util.Date(cursor.getLong(offset + 13)));
+        entity.setImageId(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setDate(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
+        entity.setNote(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setConsumeType(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+        entity.setConsumeTypeName(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setAmount(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
+        entity.setLongitude(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setLatitude(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setCreatedAt(cursor.isNull(offset + 14) ? null : new java.util.Date(cursor.getLong(offset + 14)));
+        entity.setUpdatedAt(cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)));
      }
     
     /** @inheritdoc */
